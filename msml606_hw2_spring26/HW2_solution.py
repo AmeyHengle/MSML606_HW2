@@ -121,7 +121,76 @@ class HomeWork2:
         }
 
         return assembly[order]
-    
+
+def printTree(node, prefix="", is_left=True, is_root=True):
+    if node is not None:
+        printTree(node.right, prefix + ("    " if is_left or is_root else "│   "), False, False)
+        print(prefix + ("└── " if is_left else "┌── ") + str(node.val))
+        printTree(node.left, prefix + ("│   " if is_left and not is_root else "    "), True, False)
+
+
+class Stack:
+    def __init__(self):
+        self.items = []
+        self.top_index = -1  # starts at -1 to indicate an empty stack
+
+    def push(self, item):
+        self.items.append(item)
+        self.top_index += 1
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("pop from empty stack")
+        item = self.items[self.top_index]
+        del self.items[self.top_index]
+        self.top_index -= 1
+        return item
+
+    def is_empty(self):
+        return self.top_index == -1
+
+    def evaluatePostfix(self, exp: str) -> int:
+        # edge case: empty postfix expressions
+        if not exp or not exp.strip():
+            raise ValueError("Empty expression provided.")
+
+        tokens = exp.split()
+        operators = {'+', '-', '*', '/'}
+
+        for token in tokens:
+            if token not in operators:
+                # edge case: invalid non-numeric tokens — can't push garbage onto the stack
+                try:
+                    self.push(int(token))
+                except ValueError:
+                    raise ValueError(f"Invalid token encountered: {token}")
+            else:
+                # edge case: not enough operands sitting on the stack for this operator
+                if self.top_index < 1:
+                    raise ValueError("Invalid postfix expression: insufficient operands.")
+                
+                right_val = self.pop()
+                left_val = self.pop()
+                
+                if token == '+':
+                    self.push(left_val + right_val)
+                elif token == '-':
+                    self.push(left_val - right_val)
+                elif token == '*':
+                    self.push(left_val * right_val)
+                elif token == '/':
+                    # edge case: can't divide by zero, bail out early
+                    if right_val == 0:
+                        raise ZeroDivisionError("DIVZERO")
+                    
+                    self.push(int(left_val / right_val))
+        
+        # edge case: too many operands left over — expression was malformed
+        if self.top_index != 0:
+            raise ValueError("Invalid postfix expression: too many operands left.")
+            
+        return self.pop()
+
     
 if __name__ == "__main__":
         
