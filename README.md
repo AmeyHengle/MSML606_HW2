@@ -1,4 +1,9 @@
-# MSML606 HW 2
+# MSML606 Homework Assignment 2
+```
+Name: Amey Hengle
+UID: 122283961
+Email: ameyhen@umd.edu
+```
 
 ## project structure
 
