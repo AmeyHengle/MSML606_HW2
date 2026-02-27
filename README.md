@@ -1,4 +1,4 @@
-# MSML606 HW 2 — binary expression trees
+# MSML606 HW 2
 
 ## project structure
 
@@ -15,7 +15,7 @@
 
 ### problem 1 — expression tree construction
 
-the input is a postfix token list. the tree is built using a stack: operands become leaf nodes, operators pop two nodes and become their parent.
+The input is a postfix token list. the tree is built using a stack: operands become leaf nodes, operators pop two nodes and become their parent.
 
 ```python
 hw2 = HomeWork2()
@@ -99,7 +99,7 @@ the expression `5 1 2 + 4 * + 3 -` resolves as `5 + ((1 + 2) * 4) - 3 = 14`.
 
 ### problem 4 — edge cases
 
-the following edge cases were considered across the implementation. some are fully handled, and others are noted as known limitations.
+Following edge cases were considered across the implementation. some are fully handled, and others are noted as known limitations.
 
 ---
 
@@ -154,7 +154,7 @@ if operator == '/' and right_operand == 0:
 
 **current status: not handled.**
 
-anything that isn't in `_OPERATORS` is treated as a valid operand and silently wrapped into a leaf node. a token like `"abc"` or `"@"` would enter the tree without complaint. guarding against this would require a validation step that checks whether non-operator tokens are actually numeric before pushing them onto the stack.
+Anything that isn't in `_OPERATORS` is treated as a valid operand and silently wrapped into a leaf node. a token like `"abc"` or `"@"` would enter the tree without complaint. guarding against this would require a validation step that checks whether non-operator tokens are actually numeric before pushing them onto the stack.
 
 ```python
 # no error raised — "abc" just becomes a leaf node
@@ -167,7 +167,7 @@ hw2.constructBinaryTree(["abc", "3", "+"])
 
 **current status: not a concern at the tree level.**
 
-the tree only stores tokens — no arithmetic is performed during construction or traversal. python also handles arbitrarily large integers natively, so integer overflow is a non-issue. floating point precision could still degrade for very large `float` values, but that is a python-level limitation rather than something this implementation needs to address.
+The tree only stores tokens — no arithmetic is performed during construction or traversal. python also handles arbitrarily large integers natively, so integer overflow is a non-issue. floating point precision could still degrade for very large `float` values, but that is a python-level limitation rather than something this implementation needs to address.
 
 ---
 
